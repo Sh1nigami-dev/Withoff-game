@@ -20,6 +20,7 @@ namespace АС_Игра_Витхоффа
         int n = 0; // первая кучка
         int m = 0; // вторая кучка
         bool playerMove; // переменная хранящая булевое значение "ходит игрок или нет"
+        List<string> historyMoves = new List<string>();
 
         // метод начала игры
         private void buttonStart(object sender, EventArgs e)
@@ -39,6 +40,8 @@ namespace АС_Игра_Витхоффа
             textBox1.Enabled = false;
             textBox2.Enabled = false;
             button1.Enabled = false;
+
+            if (!playerMove) makesMoveAI();
         }
 
         // метод для обновления значений поля на экране
@@ -86,6 +89,8 @@ namespace АС_Игра_Витхоффа
                     return;
                 }
                 else { MessageBox.Show("Недостаточно фишек в кучках!", "Предупреждение"); return; }
+
+            historyMoves.Add($"Игрок сделал ход: {x}, {y}");
 
             getCurrentWinner();
             playerMove = !playerMove;
@@ -148,9 +153,9 @@ namespace АС_Игра_Витхоффа
             {
                 label14.Text = (n - newN).ToString();
                 label15.Text = "0";
-
+                historyMoves.Add($"ПК сделал ход: {n - newN}, 0");
                 n = newN;
-
+                
                 getCurrentWinner();
                 playerMove = !playerMove;
                 updatingValues();
@@ -165,9 +170,9 @@ namespace АС_Игра_Витхоффа
             {
                 label14.Text = "0";
                 label15.Text = (m - newM).ToString();
-
+                historyMoves.Add($"ПК сделал ход: 0, {m-newM}");
                 m = newM;
-
+                
                 getCurrentWinner();
                 playerMove = !playerMove;
                 updatingValues();
@@ -184,10 +189,10 @@ namespace АС_Игра_Витхоффа
             {
                 label14.Text = remove.ToString();
                 label15.Text = remove.ToString();
-
+                historyMoves.Add($"ПК сделал ход: {remove}, {remove}");
                 n -= remove;
                 m -= remove;
-
+                
                 getCurrentWinner();
                 playerMove = !playerMove;
                 updatingValues();
@@ -204,6 +209,7 @@ namespace АС_Игра_Витхоффа
 
             label14.Text = "1";
             label15.Text = "0";
+            historyMoves.Add("ПК сделал ход: 1, 0");
         }
         else if (m > 0)
         {
@@ -211,6 +217,7 @@ namespace АС_Игра_Витхоффа
 
             label14.Text = "0";
             label15.Text = "1";
+            historyMoves.Add($"ПК сделал ход: 0, 1");
         }
 
         getCurrentWinner();
@@ -223,6 +230,22 @@ namespace АС_Игра_Витхоффа
         {
             if (!(e.KeyChar >= '0' && e.KeyChar <= '9' || (int)e.KeyChar == 8))
                 e.KeyChar = (char)0;
+        }
+
+        private void exitMenu(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rulesMenu(object sender, EventArgs e)
+        {
+
+        }
+
+        private void historyMovesMenu(object sender, EventArgs e)
+        {
+            Form hm = new Form2(historyMoves);
+            hm.Show();
         }
     }
 }

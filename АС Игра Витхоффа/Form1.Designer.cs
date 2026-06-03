@@ -367,18 +367,21 @@ namespace АС_Игра_Витхоффа
             this.историяХодовToolStripMenuItem.Name = "историяХодовToolStripMenuItem";
             this.историяХодовToolStripMenuItem.Size = new System.Drawing.Size(100, 20);
             this.историяХодовToolStripMenuItem.Text = "История ходов";
+            this.историяХодовToolStripMenuItem.Click += new System.EventHandler(this.historyMovesMenu);
             // 
             // выходToolStripMenuItem
             // 
             this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
             this.выходToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
             this.выходToolStripMenuItem.Text = "Правила";
+            this.выходToolStripMenuItem.Click += new System.EventHandler(this.rulesMenu);
             // 
             // выходToolStripMenuItem1
             // 
             this.выходToolStripMenuItem1.Name = "выходToolStripMenuItem1";
             this.выходToolStripMenuItem1.Size = new System.Drawing.Size(53, 20);
             this.выходToolStripMenuItem1.Text = "Выход";
+            this.выходToolStripMenuItem1.Click += new System.EventHandler(this.exitMenu);
             // 
             // Form1
             // 
