@@ -27,7 +27,7 @@ namespace АС_Игра_Витхоффа
         {
             if(textBox1.Text == "" && textBox2.Text == "") // проверка на наличие данных в обоих полях ввода
             {
-                MessageBox.Show("Вы не ввели в нужные поля количество фишек для начала игры", "Предупреждение");
+                MessageBox.Show("Вы не ввели в нужные поля количество фишек для начала игры", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -64,14 +64,14 @@ namespace АС_Игра_Витхоффа
         private void getCurrentWinner()
         {
             if (n <= 0 && m <= 0)
-                if (playerMove) MessageBox.Show("Вы победили", "Уведомление");
-                else MessageBox.Show("Вы проиграли", "Уведомление");
+                if (playerMove) MessageBox.Show("Вы победили", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                else MessageBox.Show("Вы проиграли", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         // метод для совершения хода игроком
         private void makeMove(object sender, EventArgs e) 
         {
-            if (textBox5.Text == "" && textBox6.Text == "") {MessageBox.Show("Хотя бы одно поле должно быть заполнено", "Предупреждение"); return; } // строка для проверки на хотя бы одно введенное значение
+            if (textBox5.Text == "" && textBox6.Text == "") {MessageBox.Show("Хотя бы одно поле должно быть заполнено", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; } // строка для проверки на хотя бы одно введенное значение
             int x = 0;
             int y = 0;
             if (textBox5.Text != "") x = int.Parse(textBox5.Text); // записываем значения с экрана во временные переменные
@@ -85,10 +85,10 @@ namespace АС_Игра_Витхоффа
             else 
                 if (x != y && x != 0 && y != 0) // проверка на разное количество фишек в кучках
                 {
-                    MessageBox.Show("Вы не можете изменять разное количество фишек в двух кучках за раз", "Предупреждение");
+                    MessageBox.Show("Вы не можете изменять разное количество фишек в двух кучках за раз", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                else { MessageBox.Show("Недостаточно фишек в кучках!", "Предупреждение"); return; }
+                else { MessageBox.Show("Недостаточно фишек в кучках!", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
 
             historyMoves.Add($"Игрок сделал ход: {x}, {y}");
 
@@ -234,12 +234,38 @@ namespace АС_Игра_Витхоффа
 
         private void exitMenu(object sender, EventArgs e)
         {
-
+            DialogResult result = MessageBox.Show("Действительно выйти?", "Выход из программы",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+            if (result == DialogResult.Yes) Close();
+            Close();
         }
 
         private void rulesMenu(object sender, EventArgs e)
         {
-
+            MessageBox.Show(
+                "ПРАВИЛА ИГРЫ ВИТХОФФА\n\n" +
+                "Игра ведётся между игроком и компьютером. На игровом поле расположены две кучки фишек.\n\n" +
+                "Цель игры:\n" +
+                "Сделать последний возможный ход и оставить на поле 0 фишек в обеих кучках.\n\n" +
+                "Правила хода:\n" +
+                "За один ход разрешается выполнить одно из следующих действий:\n" +
+                "• убрать любое количество фишек из первой кучки;\n" +
+                "• убрать любое количество фишек из второй кучки;\n" +
+                "• убрать одинаковое количество фишек одновременно из обеих кучек.\n\n" +
+                "Запрещается:\n" +
+                "• убирать больше фишек, чем находится в кучке;\n" +
+                "• убирать разное количество фишек из обеих кучек одновременно;\n" +
+                "• пропускать ход.\n\n" +
+                "Завершение игры:\n" +
+                "Игра заканчивается, когда обе кучки становятся пустыми.\n" +
+                "Победителем считается игрок, сделавший последний допустимый ход.\n\n" +
+                "Совет:\n" +
+                "Компьютер использует выигрышную стратегию, основанную на математической теории игры Витхоффа. " +
+                "Для победы старайтесь оставлять сопернику невыгодные позиции.",
+                "Правила игры Витхоффа",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
         }
 
         private void historyMovesMenu(object sender, EventArgs e)
