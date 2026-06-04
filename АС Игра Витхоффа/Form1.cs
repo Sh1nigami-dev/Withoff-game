@@ -25,7 +25,7 @@ namespace АС_Игра_Витхоффа
         // метод начала игры
         private void buttonStart(object sender, EventArgs e)
         {
-            if(textBox1.Text == "" && textBox2.Text == "") // проверка на наличие данных в обоих полях ввода
+            if(textBox1.Text == "" || textBox2.Text == "") // проверка на наличие данных в обоих полях ввода
             {
                 MessageBox.Show("Вы не ввели в нужные поля количество фишек для начала игры", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -41,6 +41,10 @@ namespace АС_Игра_Витхоффа
             textBox2.Enabled = false;
             button1.Enabled = false;
 
+            textBox5.Enabled = true;
+            textBox6.Enabled = true;
+            label14.Text = "";
+            label15.Text = "";
             if (!playerMove) makesMoveAI();
         }
 
@@ -118,6 +122,7 @@ namespace АС_Игра_Витхоффа
 
             updatingValues();
             // необходимо доделать рестарт игры
+            historyMoves.Clear();
         }
 
         

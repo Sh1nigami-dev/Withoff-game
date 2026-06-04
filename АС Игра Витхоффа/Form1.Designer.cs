@@ -79,7 +79,7 @@ namespace АС_Игра_Витхоффа
             this.groupBox1.Controls.Add(this.radioButton2);
             this.groupBox1.Controls.Add(this.radioButton1);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox1.Location = new System.Drawing.Point(2, 21);
+            this.groupBox1.Location = new System.Drawing.Point(2, 30);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(337, 100);
             this.groupBox1.TabIndex = 2;
@@ -244,6 +244,7 @@ namespace АС_Игра_Витхоффа
             // 
             // textBox5
             // 
+            this.textBox5.Enabled = false;
             this.textBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBox5.Location = new System.Drawing.Point(403, 233);
             this.textBox5.Name = "textBox5";
@@ -253,6 +254,7 @@ namespace АС_Игра_Витхоффа
             // 
             // textBox6
             // 
+            this.textBox6.Enabled = false;
             this.textBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBox6.Location = new System.Drawing.Point(632, 233);
             this.textBox6.Name = "textBox6";
@@ -358,28 +360,31 @@ namespace АС_Игра_Витхоффа
             this.выходToolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(793, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(793, 29);
             this.menuStrip1.TabIndex = 29;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // историяХодовToolStripMenuItem
             // 
+            this.историяХодовToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.историяХодовToolStripMenuItem.Name = "историяХодовToolStripMenuItem";
-            this.историяХодовToolStripMenuItem.Size = new System.Drawing.Size(100, 20);
+            this.историяХодовToolStripMenuItem.Size = new System.Drawing.Size(129, 25);
             this.историяХодовToolStripMenuItem.Text = "История ходов";
             this.историяХодовToolStripMenuItem.Click += new System.EventHandler(this.historyMovesMenu);
             // 
             // выходToolStripMenuItem
             // 
+            this.выходToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            this.выходToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
+            this.выходToolStripMenuItem.Size = new System.Drawing.Size(83, 25);
             this.выходToolStripMenuItem.Text = "Правила";
             this.выходToolStripMenuItem.Click += new System.EventHandler(this.rulesMenu);
             // 
             // выходToolStripMenuItem1
             // 
+            this.выходToolStripMenuItem1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.выходToolStripMenuItem1.Name = "выходToolStripMenuItem1";
-            this.выходToolStripMenuItem1.Size = new System.Drawing.Size(53, 20);
+            this.выходToolStripMenuItem1.Size = new System.Drawing.Size(67, 25);
             this.выходToolStripMenuItem1.Text = "Выход";
             this.выходToolStripMenuItem1.Click += new System.EventHandler(this.exitMenu);
             // 
@@ -421,7 +426,7 @@ namespace АС_Игра_Витхоффа
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = " ";
+            this.Text = " АС Игра Витхоффа";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
