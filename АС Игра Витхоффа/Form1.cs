@@ -124,9 +124,181 @@ namespace АС_Игра_Витхоффа
             historyMoves.Clear();
         }
 
+
         private void makesMoveAI()
         {
-        
+            label14.Text = "";
+            label15.Text = "";
+
+            bool exchangeValues = false;
+
+            if (n > m)
+            {
+                int buf = m;
+                m = n;
+                n = buf;
+                exchangeValues = true;
+            }
+
+            const double GoldenRatio = 1.618033988749895;
+
+            // Проверка на проигрышную позицию
+            int k0 = m - n;
+            int a0 = (int)Math.Floor(k0 * GoldenRatio);
+
+            if (a0 == n)
+            {
+                Console.WriteLine("Позиция проигрышная");
+
+                // Минимальный ход вместо зависания
+                if (n > 0)
+                {
+                    n--;
+
+                    if (exchangeValues)
+                    {
+                        label14.Text = "0";
+                        label15.Text = "1";
+                    }
+                    else
+                    {
+                        label14.Text = "1";
+                        label15.Text = "0";
+                    }
+                }
+
+                playerMove = !playerMove;
+                updatingValues();
+                return;
+            }
+
+            int targetAk = -1;
+            int targetBk = -1;
+
+            // Поиск проигрышной позиции по твоей схеме
+            for (int k = m - n; k >= 0; k--)
+            {
+                int ak = (int)Math.Floor(k * GoldenRatio);
+                int bk = ak + k;
+
+                bool reachable =
+                    (ak <= n) &&
+                    (bk <= m) &&
+                    (
+                        n == ak ||
+                        m == bk ||
+                        (n - ak == m - bk)
+                    );
+
+                if (reachable)
+                {
+                    targetAk = ak;
+                    targetBk = bk;
+                    break;
+                }
+            }
+
+            // Страховка если схема не нашла цель
+            if (targetAk == -1)
+            {
+                Console.WriteLine("Основной поиск не нашёл ход");
+
+                // уменьшение первой кучи
+                for (int newN = n - 1; newN >= 0 && targetAk == -1; newN--)
+                {
+                    int diff = m - newN;
+                    int a = (int)Math.Floor(diff * GoldenRatio);
+
+                    if (a == newN)
+                    {
+                        targetAk = newN;
+                        targetBk = m;
+                    }
+                }
+
+                // уменьшение второй кучи
+                for (int newM = m - 1; newM >= 0 && targetAk == -1; newM--)
+                {
+                    int diff = newM - n;
+
+                    if (diff >= 0)
+                    {
+                        int a = (int)Math.Floor(diff * GoldenRatio);
+
+                        if (a == n)
+                        {
+                            targetAk = n;
+                            targetBk = newM;
+                        }
+                    }
+                }
+
+                // уменьшение обеих куч
+                for (int remove = 1;
+                     remove <= Math.Min(n, m) && targetAk == -1;
+                     remove++)
+                {
+                    int nn = n - remove;
+                    int mm = m - remove;
+
+                    int diff = mm - nn;
+                    int a = (int)Math.Floor(diff * GoldenRatio);
+
+                    if (a == nn)
+                    {
+                        targetAk = nn;
+                        targetBk = mm;
+                    }
+                }
+            }
+
+            if (targetAk == -1)
+            {
+                Console.WriteLine("Вообще не удалось найти ход");
+
+                if (n > 0)
+                {
+                    targetAk = n - 1;
+                    targetBk = m;
+                }
+                else
+                {
+                    targetAk = n;
+                    targetBk = m - 1;
+                }
+            }
+
+            int q = n - targetAk;
+            int e = m - targetBk;
+
+            Console.WriteLine($"Цель: ({targetAk},{targetBk})");
+            Console.WriteLine($"Убираем: {q} и {e}");
+
+            n = targetAk;
+            m = targetBk;
+
+            if (exchangeValues)
+            {
+                int buf = m;
+                m = n;
+                n = buf;
+
+                label14.Text = q.ToString();
+                label15.Text = e.ToString();
+            }
+            else
+            {
+                label14.Text = e.ToString();
+                label15.Text = q.ToString();
+            }
+
+            Console.WriteLine("======================");
+            Console.WriteLine($"После хода: {n} {m}");
+            Console.WriteLine("======================");
+
+            getCurrentWinner();
+            playerMove = !playerMove;
+            updatingValues();
         }
 
         // ограничения на ввод посторонних символов в textbox
