@@ -148,10 +148,8 @@ namespace АС_Игра_Витхоффа
 
             if (a0 == n)
             {
-                Console.WriteLine("Позиция проигрышная");
-
                 // Минимальный ход вместо зависания
-                if (n > 0)
+                if (n > 0)  
                 {
                     n--;
 
@@ -164,6 +162,21 @@ namespace АС_Игра_Витхоффа
                     {
                         label14.Text = "1";
                         label15.Text = "0";
+                    }
+                }
+                else if (m > 0)
+                {
+                    m--;
+
+                    if (exchangeValues)
+                    {
+                        label14.Text = "1";
+                        label15.Text = "0";
+                    }
+                    else
+                    {
+                        label14.Text = "0";
+                        label15.Text = "1";
                     }
                 }
 
@@ -198,64 +211,8 @@ namespace АС_Игра_Витхоффа
                 }
             }
 
-            // Страховка если схема не нашла цель
             if (targetAk == -1)
             {
-                Console.WriteLine("Основной поиск не нашёл ход");
-
-                // уменьшение первой кучи
-                for (int newN = n - 1; newN >= 0 && targetAk == -1; newN--)
-                {
-                    int diff = m - newN;
-                    int a = (int)Math.Floor(diff * GoldenRatio);
-
-                    if (a == newN)
-                    {
-                        targetAk = newN;
-                        targetBk = m;
-                    }
-                }
-
-                // уменьшение второй кучи
-                for (int newM = m - 1; newM >= 0 && targetAk == -1; newM--)
-                {
-                    int diff = newM - n;
-
-                    if (diff >= 0)
-                    {
-                        int a = (int)Math.Floor(diff * GoldenRatio);
-
-                        if (a == n)
-                        {
-                            targetAk = n;
-                            targetBk = newM;
-                        }
-                    }
-                }
-
-                // уменьшение обеих куч
-                for (int remove = 1;
-                     remove <= Math.Min(n, m) && targetAk == -1;
-                     remove++)
-                {
-                    int nn = n - remove;
-                    int mm = m - remove;
-
-                    int diff = mm - nn;
-                    int a = (int)Math.Floor(diff * GoldenRatio);
-
-                    if (a == nn)
-                    {
-                        targetAk = nn;
-                        targetBk = mm;
-                    }
-                }
-            }
-
-            if (targetAk == -1)
-            {
-                Console.WriteLine("Вообще не удалось найти ход");
-
                 if (n > 0)
                 {
                     targetAk = n - 1;
@@ -271,9 +228,6 @@ namespace АС_Игра_Витхоффа
             int q = n - targetAk;
             int e = m - targetBk;
 
-            Console.WriteLine($"Цель: ({targetAk},{targetBk})");
-            Console.WriteLine($"Убираем: {q} и {e}");
-
             n = targetAk;
             m = targetBk;
 
@@ -285,16 +239,14 @@ namespace АС_Игра_Витхоффа
 
                 label14.Text = q.ToString();
                 label15.Text = e.ToString();
+                historyMoves.Add($"ПК сделал ход: {q}, {e}");
             }
             else
             {
                 label14.Text = e.ToString();
                 label15.Text = q.ToString();
+                historyMoves.Add($"ПК сделал ход: {e}, {q}");
             }
-
-            Console.WriteLine("======================");
-            Console.WriteLine($"После хода: {n} {m}");
-            Console.WriteLine("======================");
 
             getCurrentWinner();
             playerMove = !playerMove;
