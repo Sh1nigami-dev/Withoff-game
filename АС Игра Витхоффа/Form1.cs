@@ -20,7 +20,7 @@ namespace АС_Игра_Витхоффа
         int n = 0; // первая кучка
         int m = 0; // вторая кучка
         bool playerMove; // переменная хранящая булевое значение "ходит игрок или нет"
-        List<string> historyMoves = new List<string>();
+        List<string> historyMoves = new List<string>(); // список строк хранящие историю ходовы
 
         // метод начала игры
         private void buttonStart(object sender, EventArgs e)
@@ -124,14 +124,13 @@ namespace АС_Игра_Витхоффа
             historyMoves.Clear();
         }
 
-
         private void makesMoveAI()
         {
             label14.Text = "";
             label15.Text = "";
 
+            // обмен месатми значения для корректного расчета компьютером
             bool exchangeValues = false;
-
             if (n > m)
             {
                 int buf = m;
@@ -140,11 +139,12 @@ namespace АС_Игра_Витхоффа
                 exchangeValues = true;
             }
 
-            const double GoldenRatio = 1.618033988749895;
+            // константа золотого сечения
+            const double goldenRatio = 1.618033988749895;
 
-            // Проверка на проигрышную позицию
+            // проверка на проигрышную позицию
             int k0 = m - n;
-            int a0 = (int)Math.Floor(k0 * GoldenRatio);
+            int a0 = (int)Math.Floor(k0 * goldenRatio);
 
             if (a0 == n)
             {
@@ -185,25 +185,17 @@ namespace АС_Игра_Витхоффа
                 return;
             }
 
+            // переменные хранящие новое значение переменных n и m после расчетов
             int targetAk = -1;
             int targetBk = -1;
 
-            // Поиск проигрышной позиции по твоей схеме
+            // Поиск проигрышной позиции
             for (int k = m - n; k >= 0; k--)
             {
-                int ak = (int)Math.Floor(k * GoldenRatio);
+                int ak = (int)Math.Floor(k * goldenRatio);
                 int bk = ak + k;
 
-                bool reachable =
-                    (ak <= n) &&
-                    (bk <= m) &&
-                    (
-                        n == ak ||
-                        m == bk ||
-                        (n - ak == m - bk)
-                    );
-
-                if (reachable)
+                if ((ak <= n) && (bk <= m) && (n == ak || m == bk || (n - ak == m - bk)))
                 {
                     targetAk = ak;
                     targetBk = bk;
@@ -211,6 +203,7 @@ namespace АС_Игра_Витхоффа
                 }
             }
 
+            // в случае не нахождения проигрышной поизиции делать минимальных ход
             if (targetAk == -1)
             {
                 if (n > 0)
@@ -225,12 +218,15 @@ namespace АС_Игра_Витхоффа
                 }
             }
 
+            // переменные для обновления информации на экране
             int q = n - targetAk;
             int e = m - targetBk;
 
+            // обновление значений переменных
             n = targetAk;
             m = targetBk;
 
+            // обратный обмен значений переменных при необходимости и обновление данных на экране
             if (exchangeValues)
             {
                 int buf = m;
@@ -260,6 +256,7 @@ namespace АС_Игра_Витхоффа
                 e.KeyChar = (char)0;
         }
 
+        // метод выхода из программы
         private void exitMenu(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("Действительно выйти?", "Выход из программы",
@@ -268,6 +265,7 @@ namespace АС_Игра_Витхоффа
             Close();
         }
 
+        // метод показа правил игры
         private void rulesMenu(object sender, EventArgs e)
         {
             MessageBox.Show(
@@ -296,6 +294,7 @@ namespace АС_Игра_Витхоффа
             );
         }
 
+        // метод показа истории ходов
         private void historyMovesMenu(object sender, EventArgs e)
         {
             Form hm = new Form2(historyMoves);
