@@ -121,114 +121,13 @@ namespace АС_Игра_Витхоффа
 
 
             updatingValues();
-            // необходимо доделать рестарт игры
             historyMoves.Clear();
         }
 
+        private void makesMoveAI()
+        {
         
-    private bool IsLosingPosition(int a, int b)
-    {
-        if (a > b)
-        {
-            int temp = a;
-            a = b;
-            b = temp;
         }
-
-        const double GoldenRatio = 1.618033988749895;
-
-        int k = b - a;
-        int ak = (int)Math.Floor(k * GoldenRatio);
-
-        return ak == a;
-    }
-
-    private void makesMoveAI()
-    {
-        label14.Text = "";
-        label15.Text = "";
-
-        int originalN = n;
-        int originalM = m;
-
-        // 1. Уменьшаем первую кучу
-        for (int newN = 0; newN < n; newN++)
-        {
-            if (IsLosingPosition(newN, m))
-            {
-                label14.Text = (n - newN).ToString();
-                label15.Text = "0";
-                historyMoves.Add($"ПК сделал ход: {n - newN}, 0");
-                n = newN;
-                
-                getCurrentWinner();
-                playerMove = !playerMove;
-                updatingValues();
-                return;
-            }
-        }
-
-        // 2. Уменьшаем вторую кучу
-        for (int newM = 0; newM < m; newM++)
-        {
-            if (IsLosingPosition(n, newM))
-            {
-                label14.Text = "0";
-                label15.Text = (m - newM).ToString();
-                historyMoves.Add($"ПК сделал ход: 0, {m-newM}");
-                m = newM;
-                
-                getCurrentWinner();
-                playerMove = !playerMove;
-                updatingValues();
-                return;
-            }
-        }
-
-        // 3. Уменьшаем обе кучи одинаково
-        int maxRemove = Math.Min(n, m);
-
-        for (int remove = 1; remove <= maxRemove; remove++)
-        {
-            if (IsLosingPosition(n - remove, m - remove))
-            {
-                label14.Text = remove.ToString();
-                label15.Text = remove.ToString();
-                historyMoves.Add($"ПК сделал ход: {remove}, {remove}");
-                n -= remove;
-                m -= remove;
-                
-                getCurrentWinner();
-                playerMove = !playerMove;
-                updatingValues();
-                return;
-            }
-        }
-
-        // Если вдруг проигрышная позиция и выигрышного хода нет,
-        // делаем минимальный допустимый ход
-
-        if (n > 0)
-        {
-            n--;
-
-            label14.Text = "1";
-            label15.Text = "0";
-            historyMoves.Add("ПК сделал ход: 1, 0");
-        }
-        else if (m > 0)
-        {
-            m--;
-
-            label14.Text = "0";
-            label15.Text = "1";
-            historyMoves.Add($"ПК сделал ход: 0, 1");
-        }
-
-        getCurrentWinner();
-        playerMove = !playerMove;
-        updatingValues();
-    }
 
         // ограничения на ввод посторонних символов в textbox
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
